@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Enquiry = require('./models/Enquiry');
 const Donor = require('./models/Donor');
+const BloodRequest = require('./models/BloodRequest');
 require('dotenv').config();
 
 const app = express();
@@ -128,6 +129,55 @@ app.get('/api/donors', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to search donors'
+    });
+  }
+});
+
+// Blood Request API
+app.post('/api/blood-requests', async (req, res) => {
+  try {
+    const {
+      patientName,
+      contactName,
+      bloodGroup,
+      units,
+      phone,
+      email,
+      city,
+      hospital,
+      requiredDate,
+      urgency,
+      message
+    } = req.body;
+
+    const bloodRequest = new BloodRequest({
+      patientName,
+      contactName,
+      bloodGroup,
+      units,
+      phone,
+      email,
+      city,
+      hospital,
+      requiredDate,
+      urgency,
+      message
+    });
+
+    await bloodRequest.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Blood request submitted successfully!',
+      data: bloodRequest
+    });
+
+  } catch (error) {
+    console.error('Error saving blood request:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to submit blood request'
     });
   }
 });
