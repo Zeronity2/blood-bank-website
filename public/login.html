@@ -1,188 +1,1257 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login / Sign Up - Blood Bank</title>
+
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background-color: #000; 
-      font-family: Arial, sans-serif;
-      color: #fff;
+      box-sizing: border-box;
     }
 
-    .header {
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #fff5f5, #ffe1e1);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      background: #d40000;
+      color: white;
+      padding: 18px 40px;
+
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 20px 30px;
-      background-color: #cc0000; 
+      justify-content: space-between;
+
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
+    header h1 {
+      font-size: 25px;
+      white-space: nowrap;
     }
 
-    .nav-links {
+    nav {
       display: flex;
-      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    .nav-links a {
+    nav a {
       color: white;
       text-decoration: none;
+
+      margin: 5px 9px;
+
+      font-size: 14px;
       font-weight: bold;
-      transition: 0.3s;
     }
 
-    .nav-links a:hover {
-      color: #000;
+    nav a:hover {
+      text-decoration: underline;
+      color: #ffe5e5;
     }
 
-    .container {
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 30px;
-      background-color: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      box-shadow: 0 0 10px #cc0000;
+    /* ================= MAIN ================= */
+
+    .main {
+      min-height: calc(100vh - 80px);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 50px 20px;
     }
 
-    h1 {
-      text-align: center;
+    .auth-container {
+      width: 100%;
+      max-width: 1000px;
+
+      background: white;
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ================= LEFT ================= */
+
+    .welcome-section {
+      background:
+        linear-gradient(
+          145deg,
+          #d40000,
+          #a90000
+        );
+
+      color: white;
+
+      padding: 55px 45px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .blood-icon {
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
+    .welcome-section h2 {
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
+
+    .welcome-section p {
+      color: #ffecec;
+
+      line-height: 1.7;
+
+      font-size: 15px;
+
       margin-bottom: 30px;
     }
 
-    form label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
+    .benefits {
+      list-style: none;
     }
 
-    form input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-    }
+    .benefits li {
+      margin-bottom: 15px;
 
-    form button {
-      margin-top: 25px;
-      padding: 12px 20px;
-      background-color: #cc0000;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    form button:hover {
-      background-color: #e60000;
-    }
-
-    .error {
-      color: red;
       font-size: 14px;
-      margin-top: 10px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+    }
+
+    .check {
+      width: 25px;
+      height: 25px;
+
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.2);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ================= RIGHT ================= */
+
+    .auth-section {
+      padding: 45px;
+    }
+
+    .auth-section h2 {
+      text-align: center;
+
+      color: #d40000;
+
+      margin-bottom: 8px;
+
+      font-size: 28px;
+    }
+
+    .auth-subtitle {
+      text-align: center;
+
+      color: #777;
+
+      font-size: 14px;
+
+      margin-bottom: 25px;
+    }
+
+    /* ================= TABS ================= */
+
+    .tabs {
+      display: flex;
+
+      background: #fff1f1;
+
+      border-radius: 8px;
+
+      padding: 4px;
+
+      margin-bottom: 25px;
+    }
+
+    .tab {
+      width: 50%;
+
+      border: none;
+
+      background: transparent;
+
+      padding: 11px;
+
+      border-radius: 6px;
+
+      color: #777;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      font-size: 14px;
+    }
+
+    .tab.active {
+      background: #d40000;
+      color: white;
+    }
+
+    /* ================= FORM ================= */
+
+    .form {
       display: none;
     }
 
-    @media (max-width: 768px) {
-      .nav-links {
+    .form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    .form-group label {
+      display: block;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      margin-bottom: 7px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+
+      padding: 12px 45px 12px 13px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 8px;
+
+      outline: none;
+
+      font-size: 14px;
+
+      transition: 0.2s;
+    }
+
+    .input-wrapper input:focus {
+      border-color: #d40000;
+
+      box-shadow:
+        0 0 0 3px rgba(212, 0, 0, 0.08);
+    }
+
+    .eye-btn {
+      position: absolute;
+
+      right: 10px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      border: none;
+
+      background: transparent;
+
+      cursor: pointer;
+
+      font-size: 18px;
+    }
+
+    /* ================= OPTIONS ================= */
+
+    .login-options {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 20px;
+
+      font-size: 12px;
+    }
+
+    .remember {
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+    }
+
+    .forgot {
+      color: #d40000;
+
+      text-decoration: none;
+
+      font-weight: bold;
+    }
+
+    /* ================= BUTTON ================= */
+
+    .submit-btn {
+      width: 100%;
+
+      border: none;
+
+      background: #d40000;
+
+      color: white;
+
+      padding: 13px;
+
+      border-radius: 8px;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #b00000;
+
+      transform: translateY(-1px);
+    }
+
+    /* ================= DIVIDER ================= */
+
+    .divider {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      margin: 22px 0;
+
+      color: #aaa;
+
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+
+      flex: 1;
+
+      height: 1px;
+
+      background: #eee;
+    }
+
+    .home-link {
+      text-align: center;
+    }
+
+    .home-link a {
+      color: #d40000;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+    /* ================= MESSAGE ================= */
+
+    .message {
+      display: none;
+
+      padding: 10px;
+
+      border-radius: 7px;
+
+      margin-bottom: 15px;
+
+      font-size: 13px;
+
+      text-align: center;
+    }
+
+    .message.success {
+      display: block;
+
+      background: #e9f9ee;
+
+      color: #19733b;
+    }
+
+    .message.error {
+      display: block;
+
+      background: #ffe9e9;
+
+      color: #b00000;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #d40000;
+
+      color: white;
+
+      text-align: center;
+
+      padding: 18px;
+
+      font-size: 13px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 850px) {
+
+      header {
         flex-direction: column;
-        align-items: flex-end;
+
+        gap: 15px;
+
+        padding: 18px 20px;
       }
 
-      .container {
-        margin: 100px 20px;
+      nav {
+        justify-content: center;
+      }
+
+      .auth-container {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome-section {
+        display: none;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .main {
+        padding: 30px 15px;
+      }
+
+      .auth-section {
+        padding: 30px 22px;
+      }
+
+      nav a {
+        font-size: 12px;
+
+        margin: 4px 6px;
       }
     }
   </style>
 </head>
+
 <body>
 
 
-  <div class="header">
-    <div class="logo">Blood Bank</div>
-    <div class="nav-links">
+  <!-- ================= HEADER ================= -->
+
+  <header>
+
+    <h1>Blood Bank</h1>
+
+    <nav>
+
       <a href="index.html">Home</a>
-      <a href="donor.html">
-        Become Donor
-      </a>
 
-      <a href="find-donor.html">
-        Find Donor
-      </a>
+      <a href="donor.html">Become Donor</a>
 
-      <a href="request-blood.html">
-        Request Blood
-      </a>
+      <a href="find-donor.html">Find Donor</a>
 
-      <a href="enquiry.html">
-        Enquiry
-      </a>
+      <a href="request-blood.html">Request Blood</a>
 
-      <a href="bloodgroups.html">
-        Blood Groups
-      </a>
+      <a href="enquiry.html">Enquiry</a>
 
-      <a href="gallery.html">
-        Gallery
-      </a>
+      <a href="bloodgroups.html">Blood Groups</a>
 
-      <a href="contact.html">
-        Contact
-      </a>
+      <a href="gallery.html">Gallery</a>
 
-      <a href="login.html">
-        Login
-      </a>
+      <a href="contact.html">Contact</a>
+
+      <a href="login.html">SignUp/Login</a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="main">
+
+    <div class="auth-container">
+
+
+      <!-- ================= WELCOME ================= -->
+
+      <section class="welcome-section">
+
+        <div class="blood-icon">
+          🩸
+        </div>
+
+        <h2>
+          Welcome to Blood Bank
+        </h2>
+
+        <p>
+          Join our community and help connect blood
+          donors with people who need them.
+          Every contribution can make a difference.
+        </p>
+
+        <ul class="benefits">
+
+          <li>
+            <span class="check">✓</span>
+            Find blood donors
+          </li>
+
+          <li>
+            <span class="check">✓</span>
+            Request blood when needed
+          </li>
+
+          <li>
+            <span class="check">✓</span>
+            Register as a blood donor
+          </li>
+
+          <li>
+            <span class="check">✓</span>
+            Manage your account
+          </li>
+
+        </ul>
+
+      </section>
+
+
+      <!-- ================= AUTH ================= -->
+
+      <section class="auth-section">
+
+        <h2 id="authTitle">
+          Welcome Back
+        </h2>
+
+        <p class="auth-subtitle" id="authSubtitle">
+          Login to continue to your account
+        </p>
+
+
+        <!-- TABS -->
+
+        <div class="tabs">
+
+          <button
+            class="tab active"
+            id="loginTab"
+            type="button"
+          >
+            Login
+          </button>
+
+          <button
+            class="tab"
+            id="signupTab"
+            type="button"
+          >
+            Sign Up
+          </button>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div
+          id="message"
+          class="message"
+        ></div>
+
+
+        <!-- ================= LOGIN FORM ================= -->
+
+        <form
+          id="loginForm"
+          class="form active"
+        >
+
+          <div class="form-group">
+
+            <label for="loginEmail">
+              Email Address
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="email"
+                id="loginEmail"
+                placeholder="Enter your email"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="loginPassword">
+              Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+                required
+              >
+
+              <button
+                type="button"
+                class="eye-btn"
+                onclick="togglePassword(
+                  'loginPassword',
+                  this
+                )"
+              >
+                👁️
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="login-options">
+
+            <label class="remember">
+
+              <input
+                type="checkbox"
+                id="rememberMe"
+              >
+
+              Remember me
+
+            </label>
+
+            <a
+              href="#"
+              class="forgot"
+              onclick="forgotPassword(event)"
+            >
+              Forgot password?
+            </a>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            Login
+          </button>
+
+        </form>
+
+
+        <!-- ================= SIGNUP FORM ================= -->
+
+        <form
+          id="signupForm"
+          class="form"
+        >
+
+          <div class="form-group">
+
+            <label for="signupName">
+              Full Name
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="text"
+                id="signupName"
+                placeholder="Enter your full name"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="signupEmail">
+              Email Address
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="email"
+                id="signupEmail"
+                placeholder="Enter your email"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="signupPassword">
+              Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="password"
+                id="signupPassword"
+                placeholder="Minimum 6 characters"
+                required
+              >
+
+              <button
+                type="button"
+                class="eye-btn"
+                onclick="togglePassword(
+                  'signupPassword',
+                  this
+                )"
+              >
+                👁️
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="confirmPassword">
+              Confirm Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+                required
+              >
+
+              <button
+                type="button"
+                class="eye-btn"
+                onclick="togglePassword(
+                  'confirmPassword',
+                  this
+                )"
+              >
+                👁️
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            Create Account
+          </button>
+
+        </form>
+
+
+        <div class="divider">
+          or
+        </div>
+
+
+        <div class="home-link">
+
+          <a href="index.html">
+            ← Back to Home
+          </a>
+
+        </div>
+
+      </section>
+
     </div>
-  </div>
 
-  
-  <div class="container">
-    <h1>Login</h1>
-    <form id="loginForm">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" required />
+  </main>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required />
 
-      <div class="error" id="errorMsg">Please enter both username and password.</div>
+  <!-- ================= FOOTER ================= -->
 
-      <button type="submit">Login</button>
-    </form>
-  </div>
+  <footer>
+
+    &copy; 2025 Blood Bank.
+    All Rights Reserved.
+
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
 
   <script>
-    const form = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+    const loginTab =
+      document.getElementById("loginTab");
 
-      const username = form.username.value.trim();
-      const password = form.password.value.trim();
+    const signupTab =
+      document.getElementById("signupTab");
 
-      if (username === '' || password === '') {
-        errorMsg.style.display = 'block';
-      } else {
-        errorMsg.style.display = 'none';
-        alert("Login successful!");
-        
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const signupForm =
+      document.getElementById("signupForm");
+
+    const authTitle =
+      document.getElementById("authTitle");
+
+    const authSubtitle =
+      document.getElementById("authSubtitle");
+
+    const message =
+      document.getElementById("message");
+
+
+    /* ================= SWITCH LOGIN / SIGNUP ================= */
+
+    loginTab.addEventListener(
+      "click",
+      function() {
+
+        loginTab.classList.add("active");
+
+        signupTab.classList.remove("active");
+
+        loginForm.classList.add("active");
+
+        signupForm.classList.remove("active");
+
+        authTitle.textContent =
+          "Welcome Back";
+
+        authSubtitle.textContent =
+          "Login to continue to your account";
+
+        clearMessage();
+
       }
-    });
+    );
+
+
+    signupTab.addEventListener(
+      "click",
+      function() {
+
+        signupTab.classList.add("active");
+
+        loginTab.classList.remove("active");
+
+        signupForm.classList.add("active");
+
+        loginForm.classList.remove("active");
+
+        authTitle.textContent =
+          "Create Account";
+
+        authSubtitle.textContent =
+          "Join our blood donation community";
+
+        clearMessage();
+
+      }
+    );
+
+
+    /* ================= SHOW / HIDE PASSWORD ================= */
+
+    function togglePassword(
+      inputId,
+      button
+    ) {
+
+      const input =
+        document.getElementById(inputId);
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        button.textContent = "🙈";
+
+      } else {
+
+        input.type = "password";
+
+        button.textContent = "👁️";
+
+      }
+
+    }
+
+
+    /* ================= MESSAGE ================= */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    function clearMessage() {
+
+      message.textContent = "";
+
+      message.className =
+        "message";
+
+    }
+
+
+    /* ================= SIGNUP ================= */
+
+    signupForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        clearMessage();
+
+
+        const name =
+          document
+            .getElementById("signupName")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("signupEmail")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("signupPassword")
+            .value;
+
+        const confirmPassword =
+          document
+            .getElementById("confirmPassword")
+            .value;
+
+
+        if (password !== confirmPassword) {
+
+          showMessage(
+            "Passwords do not match.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (password.length < 6) {
+
+          showMessage(
+            "Password must be at least 6 characters.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/api/signup",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify({
+                  name,
+                  email,
+                  password
+                })
+              }
+            );
+
+
+          const result =
+            await response.json();
+
+
+          if (result.success) {
+
+            showMessage(
+              "Account created successfully! You can now login.",
+              "success"
+            );
+
+            signupForm.reset();
+
+
+            setTimeout(
+              function() {
+
+                loginTab.click();
+
+                document
+                  .getElementById("loginEmail")
+                  .value = email;
+
+              },
+              1200
+            );
+
+          } else {
+
+            showMessage(
+              result.message ||
+              "Unable to create account.",
+              "error"
+            );
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Signup error:",
+            error
+          );
+
+          showMessage(
+            "Unable to connect to the server.",
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* ================= LOGIN ================= */
+
+    loginForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        clearMessage();
+
+
+        const email =
+          document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("loginPassword")
+            .value;
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/api/login",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify({
+                  email,
+                  password
+                })
+              }
+            );
+
+
+          const result =
+            await response.json();
+
+
+          if (result.success) {
+
+            /*
+              Store token locally.
+              We'll use this later to
+              protect dashboards.
+            */
+
+            localStorage.setItem(
+              "token",
+              result.token
+            );
+
+            localStorage.setItem(
+              "user",
+              JSON.stringify(result.user)
+            );
+
+
+            showMessage(
+              "Login successful! Redirecting...",
+              "success"
+            );
+
+
+            setTimeout(
+              function() {
+
+                if (
+                  result.user.role ===
+                  "admin"
+                ) {
+
+                  window.location.href =
+                    "admin-dashboard.html";
+
+                } else {
+
+                  window.location.href =
+                    "user-dashboard.html";
+
+                }
+
+              },
+              800
+            );
+
+          } else {
+
+            showMessage(
+              result.message ||
+              "Invalid email or password.",
+              "error"
+            );
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+          showMessage(
+            "Unable to connect to the server.",
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* ================= FORGOT PASSWORD ================= */
+
+    function forgotPassword(event) {
+
+      event.preventDefault();
+
+      alert(
+        "Password recovery will be added in the next phase."
+      );
+
+    }
+
   </script>
 
 </body>
+
 </html>
