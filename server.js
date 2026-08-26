@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const Enquiry = require('./models/Enquiry');
+const Donor = require('./models/Donor');
 require('dotenv').config();
 
 const app = express();
@@ -14,17 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 // Serve frontend
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Test GET API
-app.get('/api/test', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Express API is working!'
-  });
-});
-
-
-// Test POST API
-app.post('/api/test', async (req, res) => {
+//Enquiry API
+app.post('/api/enquiries', async (req, res) => {
   try {
     const { name, email, phone, bloodGroup, message } = req.body;
 
@@ -50,6 +42,51 @@ app.post('/api/test', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to save enquiry'
+    });
+  }
+});
+
+// Donor API
+app.post('/api/donors', async (req, res) => {
+  try {
+    const {
+      name,
+      age,
+      gender,
+      bloodGroup,
+      phone,
+      email,
+      city,
+      lastDonation,
+      available
+    } = req.body;
+
+    const donor = new Donor({
+      name,
+      age,
+      gender,
+      bloodGroup,
+      phone,
+      email,
+      city,
+      lastDonation,
+      available
+    });
+
+    await donor.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Donor registered successfully!',
+      data: donor
+    });
+
+  } catch (error) {
+    console.error('Error saving donor:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to register donor'
     });
   }
 });

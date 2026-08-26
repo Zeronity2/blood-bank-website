@@ -102,6 +102,7 @@
       <a href="hospitals.html">Hospitals</a>
       <a href="bloodgroups.html">Blood Groups</a>
       <a href="gallery.html">Gallery</a>
+      <a href="donor.html">Donor</a>
       <a href="contact.html">Contact Us</a>
       <a href="login.html">Login</a>
     </nav>
@@ -143,11 +144,41 @@
     &copy; 2025 Blood Bank. All Rights Reserved.
   </footer>
 
-  <script>
-    function submitForm(event) {
-      event.preventDefault();
-      alert("Your enquiry has been submitted successfully!");
+ <script>
+  async function submitForm(event) {
+    event.preventDefault();
+
+    const enquiryData = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      bloodGroup: document.getElementById('blood').value,
+      message: document.getElementById('message').value
+    };
+
+    try {
+      const response = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(enquiryData)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Your enquiry has been submitted successfully!');
+        document.querySelector('form').reset();
+      } else {
+        alert('Failed to submit enquiry.');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong. Please try again.');
     }
-  </script>
+  }
+</script>
 </body>
 </html>
