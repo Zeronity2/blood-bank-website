@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Groups - Blood Bank</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url(images/bloodgroups.jpg) no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    header {
+      background-color: #d90429;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      transition: background 0.3s ease;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background-color: #a5031f;
+    }
+
+    .container {
+      padding: 60px 40px;
+      background-color: rgba(255, 255, 255, 0.9);
+      margin: 40px auto;
+      max-width: 1000px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #d90429;
+      font-size: 32px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #ef233c;
+      color: white;
+    }
+
+    footer {
+      background-color: #d90429;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Blood Bank</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="enquiry.html">Enquiry Form</a>
+      <a href="hospitals.html">Hospitals</a>
+      <a href="bloodgroups.html">Blood Groups</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Blood Group Details</h2>
+    <table>
+      <tr>
+        <th>Blood Group</th>
+        <th>Can Donate To</th>
+        <th>Can Receive From</th>
+        <th>Charge (₹)</th>
+      </tr>
+      <tr>
+        <td>O-</td>
+        <td>All</td>
+        <td>O-</td>
+        <td>500</td>
+      </tr>
+      <tr>
+        <td>O+</td>
+        <td>O+, A+, B+, AB+</td>
+        <td>O+, O-</td>
+        <td>500</td>
+      </tr>
+      <tr>
+        <td>A-</td>
+        <td>A+, A-, AB+, AB-</td>
+        <td>A-, O-</td>
+        <td>550</td>
+      </tr>
+      <tr>
+        <td>A+</td>
+        <td>A+, AB+</td>
+        <td>A+, A-, O+, O-</td>
+        <td>550</td>
+      </tr>
+      <tr>
+        <td>B-</td>
+        <td>B+, B-, AB+, AB-</td>
+        <td>B-, O-</td>
+        <td>550</td>
+      </tr>
+      <tr>
+        <td>B+</td>
+        <td>B+, AB+</td>
+        <td>B+, B-, O+, O-</td>
+        <td>550</td>
+      </tr>
+      <tr>
+        <td>AB-</td>
+        <td>AB+, AB-</td>
+        <td>AB-, A-, B-, O-</td>
+        <td>600</td>
+      </tr>
+      <tr>
+        <td>AB+</td>
+        <td>AB+</td>
+        <td>All</td>
+        <td>600</td>
+      </tr>
+    </table>
+  </div>
+
+  <footer>
+    &copy; 2025 Blood Bank. All rights reserved.
+  </footer>
+
+</body>
+</html>
