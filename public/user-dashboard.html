@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>User Dashboard - Blood Bank</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+
+      width: 250px;
+      height: 100vh;
+
+      background: #d40000;
+      color: white;
+
+      padding: 25px 18px;
+
+      z-index: 1000;
+    }
+
+    .logo {
+      text-align: center;
+
+      font-size: 24px;
+      font-weight: bold;
+
+      margin-bottom: 35px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 38px;
+      margin-bottom: 5px;
+    }
+
+    .user-mini {
+      background: rgba(255, 255, 255, 0.12);
+
+      border-radius: 12px;
+
+      padding: 15px;
+
+      margin-bottom: 25px;
+
+      text-align: center;
+    }
+
+    .user-avatar {
+      width: 55px;
+      height: 55px;
+
+      border-radius: 50%;
+
+      background: white;
+      color: #d40000;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 auto 10px;
+
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .user-mini h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .user-mini p {
+      font-size: 12px;
+      color: #ffecec;
+
+      word-break: break-word;
+    }
+
+    .menu {
+      list-style: none;
+    }
+
+    .menu li {
+      margin-bottom: 7px;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      color: white;
+      text-decoration: none;
+
+      border-radius: 8px;
+
+      font-size: 14px;
+
+      transition: 0.2s;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .menu-icon {
+      width: 22px;
+      text-align: center;
+    }
+
+    .logout-btn {
+      position: absolute;
+
+      bottom: 25px;
+      left: 18px;
+      right: 18px;
+
+      border: 1px solid rgba(255, 255, 255, 0.5);
+
+      background: transparent;
+      color: white;
+
+      padding: 11px;
+
+      border-radius: 8px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      background: white;
+      color: #d40000;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 250px;
+
+      min-height: 100vh;
+
+      padding: 30px 35px;
+    }
+
+    .topbar {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      color: #333;
+      font-size: 28px;
+    }
+
+    .topbar p {
+      color: #777;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .home-btn {
+      background: white;
+      color: #d40000;
+
+      text-decoration: none;
+
+      padding: 10px 16px;
+
+      border-radius: 8px;
+
+      font-size: 13px;
+      font-weight: bold;
+
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    }
+
+    /* ================= STATS ================= */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 20px;
+
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+
+      padding: 22px;
+
+      border-radius: 12px;
+
+      box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
+
+      display: flex;
+      align-items: center;
+
+      gap: 15px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+
+      border-radius: 10px;
+
+      background: #fff0f0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 24px;
+    }
+
+    .stat-card h3 {
+      font-size: 22px;
+      color: #d40000;
+    }
+
+    .stat-card p {
+      color: #777;
+      font-size: 12px;
+
+      margin-top: 3px;
+    }
+
+    /* ================= QUICK ACTIONS ================= */
+
+    .section-title {
+      font-size: 20px;
+
+      margin-bottom: 15px;
+
+      color: #333;
+    }
+
+    .actions {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 35px;
+    }
+
+    .action-card {
+      background: white;
+
+      border-radius: 12px;
+
+      padding: 22px;
+
+      text-decoration: none;
+
+      color: #333;
+
+      box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
+
+      transition: 0.2s;
+    }
+
+    .action-card:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-icon {
+      font-size: 30px;
+
+      margin-bottom: 12px;
+    }
+
+    .action-card h3 {
+      font-size: 16px;
+
+      margin-bottom: 6px;
+    }
+
+    .action-card p {
+      color: #777;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+    }
+
+    /* ================= ACCOUNT ================= */
+
+    .content-grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 20px;
+    }
+
+    .panel {
+      background: white;
+
+      border-radius: 12px;
+
+      padding: 25px;
+
+      box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .panel-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+    .panel-header h2 {
+      font-size: 18px;
+    }
+
+    .profile-row {
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid #eee;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .profile-label {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .profile-value {
+      font-weight: bold;
+
+      font-size: 13px;
+
+      text-align: right;
+
+      word-break: break-word;
+    }
+
+    .empty-state {
+      text-align: center;
+
+      padding: 25px 10px;
+
+      color: #888;
+
+      font-size: 13px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    .mobile-header {
+      display: none;
+    }
+
+    @media (max-width: 1000px) {
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .sidebar {
+        display: none;
+      }
+
+      .mobile-header {
+        display: flex;
+
+        background: #d40000;
+
+        color: white;
+
+        padding: 15px 20px;
+
+        justify-content: space-between;
+
+        align-items: center;
+      }
+
+      .mobile-header h2 {
+        font-size: 20px;
+      }
+
+      .mobile-header button {
+        background: white;
+        color: #d40000;
+
+        border: none;
+
+        padding: 8px 12px;
+
+        border-radius: 6px;
+
+        font-weight: bold;
+      }
+
+      .main {
+        margin-left: 0;
+
+        padding: 25px 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .home-btn {
+        display: none;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= SIDEBAR ================= -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+
+      <span>🩸</span>
+
+      Blood Bank
+
+    </div>
+
+
+    <div class="user-mini">
+
+      <div
+        class="user-avatar"
+        id="sidebarAvatar"
+      >
+        U
+      </div>
+
+      <h3 id="sidebarName">
+        User
+      </h3>
+
+      <p id="sidebarEmail">
+        user@example.com
+      </p>
+
+    </div>
+
+
+    <ul class="menu">
+
+      <li>
+
+        <a
+          href="user-dashboard.html"
+          class="active"
+        >
+
+          <span class="menu-icon">🏠</span>
+
+          Dashboard
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="donor.html">
+
+          <span class="menu-icon">🩸</span>
+
+          Become a Donor
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="find-donor.html">
+
+          <span class="menu-icon">🔎</span>
+
+          Find a Donor
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="request-blood.html">
+
+          <span class="menu-icon">🆘</span>
+
+          Request Blood
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="enquiry.html">
+
+          <span class="menu-icon">📩</span>
+
+          Enquiry
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="bloodgroups.html">
+
+          <span class="menu-icon">🩸</span>
+
+          Blood Groups
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="contact.html">
+
+          <span class="menu-icon">📞</span>
+
+          Contact Us
+
+        </a>
+
+      </li>
+
+    </ul>
+
+
+    <button
+      class="logout-btn"
+      onclick="logout()"
+    >
+
+      🚪 Logout
+
+    </button>
+
+  </aside>
+
+
+  <!-- ================= MOBILE HEADER ================= -->
+
+  <div class="mobile-header">
+
+    <h2>
+      🩸 Blood Bank
+    </h2>
+
+    <button onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div>
+
+        <h1 id="welcomeText">
+          Welcome back! 👋
+        </h1>
+
+        <p>
+          Manage your Blood Bank account from here.
+        </p>
+
+      </div>
+
+      <a
+        href="index.html"
+        class="home-btn"
+      >
+        ← Website
+      </a>
+
+    </div>
+
+
+    <!-- ================= STATS ================= -->
+
+    <div class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          🩸
+        </div>
+
+        <div>
+
+          <h3 id="donationCount">
+            0
+          </h3>
+
+          <p>
+            Donations
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          🆘
+        </div>
+
+        <div>
+
+          <h3 id="requestCount">
+            0
+          </h3>
+
+          <p>
+            Blood Requests
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          📩
+        </div>
+
+        <div>
+
+          <h3 id="enquiryCount">
+            0
+          </h3>
+
+          <p>
+            Enquiries
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <h2 class="section-title">
+      Quick Actions
+    </h2>
+
+
+    <div class="actions">
+
+      <a
+        href="donor.html"
+        class="action-card"
+      >
+
+        <div class="action-icon">
+          🩸
+        </div>
+
+        <h3>
+          Become a Donor
+        </h3>
+
+        <p>
+          Register yourself as a blood donor
+          and help save lives.
+        </p>
+
+      </a>
+
+
+      <a
+        href="find-donor.html"
+        class="action-card"
+      >
+
+        <div class="action-icon">
+          🔎
+        </div>
+
+        <h3>
+          Find a Donor
+        </h3>
+
+        <p>
+          Search for available donors by
+          blood group and location.
+        </p>
+
+      </a>
+
+
+      <a
+        href="request-blood.html"
+        class="action-card"
+      >
+
+        <div class="action-icon">
+          🆘
+        </div>
+
+        <h3>
+          Request Blood
+        </h3>
+
+        <p>
+          Submit a blood request when
+          someone needs blood.
+        </p>
+
+      </a>
+
+    </div>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <div class="content-grid">
+
+
+      <!-- PROFILE -->
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2>
+            👤 My Profile
+          </h2>
+
+        </div>
+
+
+        <div class="profile-row">
+
+          <span class="profile-label">
+            Name
+          </span>
+
+          <span
+            class="profile-value"
+            id="profileName"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="profile-row">
+
+          <span class="profile-label">
+            Email
+          </span>
+
+          <span
+            class="profile-value"
+            id="profileEmail"
+          >
+            -
+          </span>
+
+        </div>
+
+
+        <div class="profile-row">
+
+          <span class="profile-label">
+            Account Type
+          </span>
+
+          <span
+            class="profile-value"
+            id="profileRole"
+          >
+            User
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- REQUESTS -->
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2>
+            🆘 My Blood Requests
+          </h2>
+
+        </div>
+
+
+        <div class="empty-state">
+
+          <div style="font-size: 35px; margin-bottom: 10px;">
+            🩸
+          </div>
+
+          <p>
+            Your blood requests will appear here.
+          </p>
+
+          <p style="margin-top: 8px;">
+            Submit a request to get started.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /*
+      Read the user information that was saved
+      by login.html.
+    */
+
+    const token =
+      localStorage.getItem("token");
+
+    const storedUser =
+      localStorage.getItem("user");
+
+
+    /*
+      If there is no token or user,
+      send the visitor back to login.
+    */
+
+    if (!token || !storedUser) {
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    let user;
+
+    try {
+
+      user =
+        JSON.parse(storedUser);
+
+    } catch (error) {
+
+      localStorage.removeItem("token");
+
+      localStorage.removeItem("user");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    /*
+      Don't allow an admin to use the
+      user dashboard.
+    */
+
+    if (
+      user &&
+      user.role === "admin"
+    ) {
+
+      window.location.href =
+        "admin-dashboard.html";
+
+    }
+
+
+    /* ================= DISPLAY USER ================= */
+
+    if (user) {
+
+      const firstName =
+        user.name
+          ? user.name.split(" ")[0]
+          : "User";
+
+
+      document
+        .getElementById("welcomeText")
+        .textContent =
+        `Welcome back, ${firstName}! 👋`;
+
+
+      document
+        .getElementById("sidebarName")
+        .textContent =
+        user.name || "User";
+
+
+      document
+        .getElementById("sidebarEmail")
+        .textContent =
+        user.email || "";
+
+
+      document
+        .getElementById("profileName")
+        .textContent =
+        user.name || "-";
+
+
+      document
+        .getElementById("profileEmail")
+        .textContent =
+        user.email || "-";
+
+
+      document
+        .getElementById("profileRole")
+        .textContent =
+        user.role === "admin"
+          ? "Administrator"
+          : "User";
+
+
+      /*
+        Use the first letter of the user's name
+        as the avatar.
+      */
+
+      const avatar =
+        user.name
+          ? user.name
+              .charAt(0)
+              .toUpperCase()
+          : "U";
+
+
+      document
+        .getElementById("sidebarAvatar")
+        .textContent =
+        avatar;
+
+    }
+
+
+    /* ================= LOGOUT ================= */
+
+    function logout() {
+
+      localStorage.removeItem("token");
+
+      localStorage.removeItem("user");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard - Blood Bank</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f6f8;
+      color: #333;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+
+      width: 250px;
+      height: 100vh;
+
+      background: #8f0000;
+      color: white;
+
+      padding: 25px 18px;
+
+      z-index: 1000;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 23px;
+      font-weight: bold;
+
+      margin-bottom: 30px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 38px;
+      margin-bottom: 5px;
+    }
+
+    .admin-card {
+      background: rgba(255, 255, 255, 0.12);
+
+      padding: 16px;
+
+      border-radius: 12px;
+
+      text-align: center;
+
+      margin-bottom: 25px;
+    }
+
+    .admin-avatar {
+      width: 55px;
+      height: 55px;
+
+      border-radius: 50%;
+
+      background: white;
+      color: #8f0000;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 auto 10px;
+
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .admin-card h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .admin-card p {
+      font-size: 12px;
+      color: #ffecec;
+
+      word-break: break-word;
+    }
+
+    .admin-badge {
+      display: inline-block;
+
+      margin-top: 8px;
+
+      padding: 4px 10px;
+
+      border-radius: 20px;
+
+      background: rgba(255, 255, 255, 0.2);
+
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* MENU */
+
+    .menu {
+      list-style: none;
+    }
+
+    .menu li {
+      margin-bottom: 6px;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      color: white;
+      text-decoration: none;
+
+      border-radius: 8px;
+
+      font-size: 14px;
+
+      transition: 0.2s;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .menu-icon {
+      width: 22px;
+      text-align: center;
+    }
+
+    .logout-btn {
+      position: absolute;
+
+      bottom: 25px;
+      left: 18px;
+      right: 18px;
+
+      padding: 11px;
+
+      background: transparent;
+
+      border: 1px solid rgba(255, 255, 255, 0.5);
+
+      color: white;
+
+      border-radius: 8px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      background: white;
+      color: #8f0000;
+    }
+
+    /* MAIN */
+
+    .main {
+      margin-left: 250px;
+
+      padding: 30px 35px;
+
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+    }
+
+    .topbar p {
+      color: #777;
+
+      font-size: 14px;
+
+      margin-top: 5px;
+    }
+
+    .website-btn {
+      background: white;
+
+      color: #8f0000;
+
+      text-decoration: none;
+
+      padding: 10px 16px;
+
+      border-radius: 8px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    /* STATISTICS */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+
+      padding: 22px;
+
+      border-radius: 12px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+
+      background: #fff0f0;
+
+      border-radius: 10px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 23px;
+    }
+
+    .stat-card h3 {
+      color: #8f0000;
+
+      font-size: 23px;
+    }
+
+    .stat-card p {
+      color: #777;
+
+      font-size: 12px;
+
+      margin-top: 3px;
+    }
+
+    /* PANELS */
+
+    .content-grid {
+      display: grid;
+
+      grid-template-columns: 1.5fr 1fr;
+
+      gap: 20px;
+    }
+
+    .panel {
+      background: white;
+
+      border-radius: 12px;
+
+      padding: 25px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .panel h2 {
+      font-size: 18px;
+
+      margin-bottom: 20px;
+    }
+
+    /* QUICK ACTIONS */
+
+    .actions {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 12px;
+    }
+
+    .action {
+      padding: 18px;
+
+      border-radius: 10px;
+
+      background: #fff7f7;
+
+      color: #333;
+
+      text-decoration: none;
+
+      border: 1px solid #f3dddd;
+
+      transition: 0.2s;
+    }
+
+    .action:hover {
+      transform: translateY(-2px);
+
+      border-color: #d40000;
+    }
+
+    .action-icon {
+      font-size: 25px;
+
+      margin-bottom: 8px;
+    }
+
+    .action h3 {
+      font-size: 14px;
+
+      margin-bottom: 5px;
+    }
+
+    .action p {
+      color: #777;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+    /* RECENT */
+
+    .recent-item {
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid #eee;
+    }
+
+    .recent-item:last-child {
+      border-bottom: none;
+    }
+
+    .recent-icon {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 8px;
+
+      background: #fff0f0;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+    }
+
+    .recent-item h4 {
+      font-size: 13px;
+
+      margin-bottom: 3px;
+    }
+
+    .recent-item p {
+      color: #888;
+
+      font-size: 11px;
+    }
+
+    /* MOBILE */
+
+    .mobile-header {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .sidebar {
+        display: none;
+      }
+
+      .mobile-header {
+        display: flex;
+
+        background: #8f0000;
+
+        color: white;
+
+        padding: 15px 20px;
+
+        justify-content: space-between;
+
+        align-items: center;
+      }
+
+      .mobile-header h2 {
+        font-size: 20px;
+      }
+
+      .mobile-header button {
+        background: white;
+
+        color: #8f0000;
+
+        border: none;
+
+        padding: 8px 12px;
+
+        border-radius: 6px;
+
+        font-weight: bold;
+      }
+
+      .main {
+        margin-left: 0;
+
+        padding: 25px 18px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .website-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+
+      <span>🩸</span>
+
+      Blood Bank
+
+    </div>
+
+
+    <div class="admin-card">
+
+      <div
+        class="admin-avatar"
+        id="adminAvatar"
+      >
+        A
+      </div>
+
+      <h3 id="adminName">
+        Administrator
+      </h3>
+
+      <p id="adminEmail">
+        admin@bloodbank.com
+      </p>
+
+      <span class="admin-badge">
+        ADMIN
+      </span>
+
+    </div>
+
+
+    <ul class="menu">
+
+      <li>
+
+        <a
+          href="admin-dashboard.html"
+          class="active"
+        >
+
+          <span class="menu-icon">
+            📊
+          </span>
+
+          Dashboard
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="donor.html">
+
+          <span class="menu-icon">
+            🩸
+          </span>
+
+          Donors
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="find-donor.html">
+
+          <span class="menu-icon">
+            🔎
+          </span>
+
+          Find Donor
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="request-blood.html">
+
+          <span class="menu-icon">
+            🆘
+          </span>
+
+          Blood Requests
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="enquiry.html">
+
+          <span class="menu-icon">
+            📩
+          </span>
+
+          Enquiries
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="contact.html">
+
+          <span class="menu-icon">
+            📞
+          </span>
+
+          Contact
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="index.html">
+
+          <span class="menu-icon">
+            🌐
+          </span>
+
+          Website
+
+        </a>
+
+      </li>
+
+    </ul>
+
+
+    <button
+      class="logout-btn"
+      onclick="logout()"
+    >
+      🚪 Logout
+    </button>
+
+  </aside>
+
+
+  <!-- MOBILE HEADER -->
+
+  <div class="mobile-header">
+
+    <h2>
+      👑 Admin
+    </h2>
+
+    <button onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div>
+
+        <h1>
+          Admin Dashboard 👑
+        </h1>
+
+        <p>
+          Manage your Blood Bank system from one place.
+        </p>
+
+      </div>
+
+      <a
+        href="index.html"
+        class="website-btn"
+      >
+        ← View Website
+      </a>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          👥
+        </div>
+
+        <div>
+
+          <h3 id="totalUsers">
+            0
+          </h3>
+
+          <p>
+            Total Users
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          🩸
+        </div>
+
+        <div>
+
+          <h3 id="totalDonors">
+            0
+          </h3>
+
+          <p>
+            Total Donors
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          🆘
+        </div>
+
+        <div>
+
+          <h3 id="totalRequests">
+            0
+          </h3>
+
+          <p>
+            Blood Requests
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          📩
+        </div>
+
+        <div>
+
+          <h3 id="totalEnquiries">
+            0
+          </h3>
+
+          <p>
+            Enquiries
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="content-grid">
+
+
+      <!-- QUICK ACTIONS -->
+
+      <div class="panel">
+
+        <h2>
+          Quick Management
+        </h2>
+
+
+        <div class="actions">
+
+
+          <a
+            href="donor.html"
+            class="action"
+          >
+
+            <div class="action-icon">
+              🩸
+            </div>
+
+            <h3>
+              Manage Donors
+            </h3>
+
+            <p>
+              View and manage registered blood donors.
+            </p>
+
+          </a>
+
+
+          <a
+            href="find-donor.html"
+            class="action"
+          >
+
+            <div class="action-icon">
+              🔎
+            </div>
+
+            <h3>
+              Find Donor
+            </h3>
+
+            <p>
+              Search donors by blood group and location.
+            </p>
+
+          </a>
+
+
+          <a
+            href="request-blood.html"
+            class="action"
+          >
+
+            <div class="action-icon">
+              🆘
+            </div>
+
+            <h3>
+              Blood Requests
+            </h3>
+
+            <p>
+              Review incoming blood requests.
+            </p>
+
+          </a>
+
+
+          <a
+            href="enquiry.html"
+            class="action"
+          >
+
+            <div class="action-icon">
+              📩
+            </div>
+
+            <h3>
+              Enquiries
+            </h3>
+
+            <p>
+              View enquiries submitted by users.
+            </p>
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- RECENT ACTIVITY -->
+
+      <div class="panel">
+
+        <h2>
+          Recent Activity
+        </h2>
+
+
+        <div class="recent-item">
+
+          <div class="recent-icon">
+            👤
+          </div>
+
+          <div>
+
+            <h4>
+              User Management
+            </h4>
+
+            <p>
+              User management will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="recent-item">
+
+          <div class="recent-icon">
+            🩸
+          </div>
+
+          <div>
+
+            <h4>
+              Donor Activity
+            </h4>
+
+            <p>
+              Donor activity will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="recent-item">
+
+          <div class="recent-icon">
+            🆘
+          </div>
+
+          <div>
+
+            <h4>
+              Blood Requests
+            </h4>
+
+            <p>
+              New requests will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="recent-item">
+
+          <div class="recent-icon">
+            📩
+          </div>
+
+          <div>
+
+            <h4>
+              Enquiries
+            </h4>
+
+            <p>
+              New enquiries will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    /* ================= AUTH CHECK ================= */
+
+    const token =
+      localStorage.getItem("token");
+
+    const storedUser =
+      localStorage.getItem("user");
+
+
+    /*
+      If the visitor is not logged in,
+      send them to login.
+    */
+
+    if (!token || !storedUser) {
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    let user;
+
+    try {
+
+      user =
+        JSON.parse(storedUser);
+
+    } catch (error) {
+
+      localStorage.removeItem("token");
+
+      localStorage.removeItem("user");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    /*
+      Only ADMIN accounts are allowed
+      on this page.
+    */
+
+    if (
+      user &&
+      user.role !== "admin"
+    ) {
+
+      window.location.href =
+        "user-dashboard.html";
+
+    }
+
+
+    /* ================= DISPLAY ADMIN ================= */
+
+    if (user) {
+
+      document
+        .getElementById("adminName")
+        .textContent =
+        user.name || "Administrator";
+
+
+      document
+        .getElementById("adminEmail")
+        .textContent =
+        user.email || "";
+
+
+      const avatar =
+        user.name
+          ? user.name
+              .charAt(0)
+              .toUpperCase()
+          : "A";
+
+
+      document
+        .getElementById("adminAvatar")
+        .textContent =
+        avatar;
+
+    }
+
+    // ================= LOAD ADMIN STATS =================
+
+async function loadAdminStats() {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch("/api/admin/stats", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      console.error("Failed to load admin stats:", result.message);
+      return;
+    }
+
+    document.getElementById("totalUsers").textContent =
+      result.stats.totalUsers;
+
+    document.getElementById("totalDonors").textContent =
+      result.stats.totalDonors;
+
+    document.getElementById("totalRequests").textContent =
+      result.stats.totalRequests;
+
+    document.getElementById("totalEnquiries").textContent =
+      result.stats.totalEnquiries;
+
+  } catch (error) {
+    console.error("Error loading admin stats:", error);
+  }
+}
+
+loadAdminStats();
+
+    /* ================= LOGOUT ================= */
+
+    function logout() {
+
+      localStorage.removeItem("token");
+
+      localStorage.removeItem("user");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+  </script>
+
+</body>
+
+</html>

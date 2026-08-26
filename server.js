@@ -18,6 +18,71 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ================= ADMIN TEST API =================
+
+app.get('/api/admin/test', authenticateAdmin, (req, res) => {
+  res.json({
+    success: true,
+    message: 'Admin authentication is working!'
+  });
+});
+
+// ================= ADMIN STATS API =================
+
+app.get('/api/admin/stats', authenticateAdmin, async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments({
+      role: 'user'
+    });
+
+    const totalDonors = await Donor.countDocuments();
+
+    const totalRequests = await BloodRequest.countDocuments();
+
+    const totalEnquiries = await Enquiry.countDocuments();
+
+    res.json({
+      success: true,
+      stats: {
+        totalUsers,
+        totalDonors,
+        totalRequests,
+        totalEnquiries
+      }
+    });
+
+  } catch (error) {
+    console.error('Admin stats error:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to load admin statistics'
+    });
+  }
+});
+
+// ================= ADMIN DONORS API =================
+
+app.get('/api/admin/donors', authenticateAdmin, async (req, res) => {
+  try {
+    const donors = await Donor.find()
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      donors
+    });
+
+  } catch (error) {
+    console.error('Admin donors error:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to load donors'
+    });
+  }
+});
+
 // Serve frontend
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -339,6 +404,45 @@ app.post('/api/login', async (req, res) => {
     });
   }
 });
+
+// ================= ADMIN AUTHENTICATION =================
+
+function authenticateAdmin(req, res, next) {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required'
+      });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    if (decoded.role !== 'admin') {
+      return res.status(403).json({
+        success: false,
+        message: 'Admin access required'
+      });
+    }
+
+    req.user = decoded;
+
+    next();
+
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid or expired token'
+    });
+  }
+}
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
