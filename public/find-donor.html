@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Find a Donor - Blood Bank</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff5f5;
+      color: #333;
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      background: #d40000;
+      color: white;
+      padding: 18px 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 5px 10px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      background: linear-gradient(
+        rgba(180, 0, 0, 0.92),
+        rgba(212, 0, 0, 0.92)
+      );
+
+      color: white;
+      text-align: center;
+
+      padding: 70px 20px 100px;
+    }
+
+    .hero h2 {
+      margin: 0 0 15px;
+      font-size: 42px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    /* ================= SEARCH ================= */
+
+    .search-wrapper {
+      max-width: 1050px;
+      margin: -55px auto 50px;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .search-box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .search-title {
+      margin-top: 0;
+      margin-bottom: 22px;
+      color: #d40000;
+      font-size: 23px;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 15px;
+      align-items: end;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 12px;
+
+      border: 1px solid #ddd;
+      border-radius: 8px;
+
+      font-size: 15px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #d40000;
+      box-shadow: 0 0 0 2px rgba(212, 0, 0, 0.1);
+    }
+
+    .search-btn {
+      border: none;
+      background: #d40000;
+      color: white;
+
+      padding: 13px 25px;
+
+      border-radius: 8px;
+      cursor: pointer;
+
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .search-btn:hover {
+      background: #b00000;
+    }
+
+    .reset-btn {
+      margin-top: 15px;
+
+      background: transparent;
+      border: none;
+
+      color: #d40000;
+
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* ================= INFO ================= */
+
+    .info-section {
+      max-width: 1050px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .info-card {
+      background: white;
+      padding: 25px;
+
+      border-radius: 12px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+
+      text-align: center;
+    }
+
+    .info-icon {
+      width: 55px;
+      height: 55px;
+
+      margin: 0 auto 15px;
+
+      border-radius: 50%;
+
+      background: #ffe2e2;
+      color: #d40000;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 25px;
+    }
+
+    .info-card h3 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .info-card p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ================= RESULTS ================= */
+
+    .results-section {
+      max-width: 1050px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+    .results-header h2 {
+      margin: 0;
+      color: #d40000;
+    }
+
+    #resultCount {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .donor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* ================= DONOR CARD ================= */
+
+    .donor-card {
+      background: white;
+
+      padding: 25px;
+
+      border-radius: 15px;
+
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .donor-card:hover {
+      transform: translateY(-4px);
+
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .donor-top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      margin-bottom: 18px;
+    }
+
+    .donor-avatar {
+      width: 55px;
+      height: 55px;
+
+      border-radius: 50%;
+
+      background: #ffe2e2;
+      color: #d40000;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .donor-name {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .available {
+      color: #16803c;
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .blood-badge {
+      display: inline-flex;
+
+      width: 48px;
+      height: 48px;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: #d40000;
+      color: white;
+
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .donor-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      border-top: 1px solid #eee;
+
+      padding-top: 15px;
+    }
+
+    .city {
+      color: #555;
+      font-size: 14px;
+    }
+
+    /* ================= NO RESULTS ================= */
+
+    .no-results {
+      background: white;
+
+      text-align: center;
+
+      padding: 50px 20px;
+
+      border-radius: 12px;
+
+      display: none;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .no-results h3 {
+      color: #d40000;
+    }
+
+    .no-results p {
+      color: #777;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #d40000;
+      color: white;
+
+      text-align: center;
+
+      padding: 20px;
+
+      margin-top: 60px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 900px) {
+
+      .search-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .donor-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .hero h2 {
+        font-size: 30px;
+      }
+
+      .search-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .donor-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      header {
+        padding: 18px 15px;
+      }
+
+      nav a {
+        margin: 4px 6px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header>
+
+    <h1>Blood Bank</h1>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="donor.html">Become Donor</a>
+      <a href="find-donor.html">Find Donor</a>
+      <a href="enquiry.html">Enquiry</a>
+      <a href="bloodgroups.html">Blood Groups</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero">
+
+    <h2>Find a Blood Donor</h2>
+
+    <p>
+      Search for available blood donors by blood group
+      and location. Every donor can make a difference
+      when someone needs blood.
+    </p>
+
+  </section>
+
+
+  <!-- ================= SEARCH BOX ================= -->
+
+  <div class="search-wrapper">
+
+    <div class="search-box">
+
+      <h2 class="search-title">
+        Search Available Donors
+      </h2>
+
+      <div class="search-grid">
+
+        <div class="field">
+
+          <label for="bloodGroup">
+            Blood Group
+          </label>
+
+          <select id="bloodGroup">
+
+            <option value="">
+              All Blood Groups
+            </option>
+
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="city">
+            City
+          </label>
+
+          <input
+            type="text"
+            id="city"
+            placeholder="Enter city"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="availability">
+            Availability
+          </label>
+
+          <select id="availability">
+
+            <option value="true">
+              Available Only
+            </option>
+
+            <option value="">
+              All Donors
+            </option>
+
+            <option value="false">
+              Not Available
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          class="search-btn"
+          onclick="searchDonors()"
+        >
+          🔍 Search
+        </button>
+
+      </div>
+
+
+      <button
+        class="reset-btn"
+        onclick="resetSearch()"
+      >
+        Reset Search
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= INFORMATION ================= -->
+
+  <section class="info-section">
+
+    <div class="info-grid">
+
+      <div class="info-card">
+
+        <div class="info-icon">
+          🩸
+        </div>
+
+        <h3>Choose Blood Group</h3>
+
+        <p>
+          Select the blood group required for the patient.
+        </p>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="info-icon">
+          📍
+        </div>
+
+        <h3>Choose Location</h3>
+
+        <p>
+          Search for donors in your city or nearby location.
+        </p>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="info-icon">
+          ❤️
+        </div>
+
+        <h3>Help Someone</h3>
+
+        <p>
+          Find an available donor and take the next
+          step toward helping someone in need.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= RESULTS ================= -->
+
+  <section class="results-section">
+
+    <div class="results-header">
+
+      <h2>Available Donors</h2>
+
+      <span id="resultCount">
+        Showing sample donors
+      </span>
+
+    </div>
+
+
+    <div id="donorGrid" class="donor-grid">
+
+      <!-- Sample Donor -->
+
+      <div class="donor-card">
+
+        <div class="donor-top">
+
+          <div class="donor-avatar">
+            K
+          </div>
+
+          <div>
+
+            <h3 class="donor-name">
+              Khushi
+            </h3>
+
+            <div class="available">
+              ● Available to Donate
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="donor-info">
+
+          <span class="city">
+            📍 Ludhiana
+          </span>
+
+          <span class="blood-badge">
+            O+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Sample Donor -->
+
+      <div class="donor-card">
+
+        <div class="donor-top">
+
+          <div class="donor-avatar">
+            A
+          </div>
+
+          <div>
+
+            <h3 class="donor-name">
+              Aman
+            </h3>
+
+            <div class="available">
+              ● Available to Donate
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="donor-info">
+
+          <span class="city">
+            📍 Delhi
+          </span>
+
+          <span class="blood-badge">
+            A+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Sample Donor -->
+
+      <div class="donor-card">
+
+        <div class="donor-top">
+
+          <div class="donor-avatar">
+            P
+          </div>
+
+          <div>
+
+            <h3 class="donor-name">
+              Priya
+            </h3>
+
+            <div class="available">
+              ● Available to Donate
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="donor-info">
+
+          <span class="city">
+            📍 Chandigarh
+          </span>
+
+          <span class="blood-badge">
+            B+
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- No Results -->
+
+    <div
+      id="noResults"
+      class="no-results"
+    >
+
+      <h3>No donors found</h3>
+
+      <p>
+        Try searching with a different blood group
+        or city.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    &copy; 2025 Blood Bank.
+    All Rights Reserved.
+
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+  async function searchDonors() {
+    const bloodGroup =
+      document.getElementById("bloodGroup").value;
+
+    const city =
+      document.getElementById("city").value.trim();
+
+    const availability =
+      document.getElementById("availability").value;
+
+    const donorGrid =
+      document.getElementById("donorGrid");
+
+    const noResults =
+      document.getElementById("noResults");
+
+    const resultCount =
+      document.getElementById("resultCount");
+
+    try {
+      const params = new URLSearchParams();
+
+      if (bloodGroup) {
+        params.append("bloodGroup", bloodGroup);
+      }
+
+      if (city) {
+        params.append("city", city);
+      }
+
+      if (availability !== "") {
+        params.append("available", availability);
+      }
+
+      const response = await fetch(
+        `/api/donors?${params.toString()}`
+      );
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      donorGrid.innerHTML = "";
+
+      if (result.data.length === 0) {
+        noResults.style.display = "block";
+        resultCount.textContent = "0 donors found";
+        return;
+      }
+
+      noResults.style.display = "none";
+
+      resultCount.textContent =
+        `${result.data.length} donor(s) found`;
+
+      result.data.forEach(donor => {
+
+        const card = document.createElement("div");
+
+        card.className = "donor-card";
+
+        const firstLetter =
+          donor.name.charAt(0).toUpperCase();
+
+        card.innerHTML = `
+          <div class="donor-top">
+
+            <div class="donor-avatar">
+              ${firstLetter}
+            </div>
+
+            <div>
+              <h3 class="donor-name">
+                ${donor.name}
+              </h3>
+
+              <div class="available">
+                ● Available to Donate
+              </div>
+            </div>
+
+          </div>
+
+          <div class="donor-info">
+
+            <span class="city">
+              📍 ${donor.city}
+            </span>
+
+            <span class="blood-badge">
+              ${donor.bloodGroup}
+            </span>
+
+          </div>
+        `;
+
+        donorGrid.appendChild(card);
+      });
+
+    } catch (error) {
+
+      console.error("Error searching donors:", error);
+
+      donorGrid.innerHTML = "";
+
+      noResults.style.display = "block";
+
+      resultCount.textContent = "Search failed";
+
+      noResults.querySelector("h3").textContent =
+        "Unable to search donors";
+
+      noResults.querySelector("p").textContent =
+        "Please try again later.";
+    }
+  }
+
+
+  function resetSearch() {
+
+    document.getElementById("bloodGroup").value = "";
+
+    document.getElementById("city").value = "";
+
+    document.getElementById("availability").value = "true";
+
+    searchDonors();
+  }
+
+
+  // Load available donors when the page opens
+  window.addEventListener("DOMContentLoaded", () => {
+    searchDonors();
+  });
+
+  </script>
+
+</body>
+
+</html>

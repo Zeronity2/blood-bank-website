@@ -91,6 +91,47 @@ app.post('/api/donors', async (req, res) => {
   }
 });
 
+// Find Donors API
+app.get('/api/donors', async (req, res) => {
+  try {
+    const { bloodGroup, city, available } = req.query;
+
+    const filter = {};
+
+    if (bloodGroup) {
+      filter.bloodGroup = bloodGroup;
+    }
+
+    if (city) {
+      filter.city = {
+        $regex: city,
+        $options: 'i'
+      };
+    }
+
+    if (available !== undefined && available !== '') {
+      filter.available = available === 'true';
+    }
+
+    const donors = await Donor.find(filter)
+      .select('name bloodGroup city available');
+
+    res.json({
+      success: true,
+      count: donors.length,
+      data: donors
+    });
+
+  } catch (error) {
+    console.error('Error searching donors:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to search donors'
+    });
+  }
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
