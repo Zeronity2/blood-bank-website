@@ -83,6 +83,28 @@ app.get('/api/admin/donors', authenticateAdmin, async (req, res) => {
   }
 });
 
+// ================= ADMIN BLOOD REQUESTS API =================
+
+app.get('/api/admin/requests', authenticateAdmin, async (req, res) => {
+  try {
+    const requests = await BloodRequest.find()
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      requests
+    });
+
+  } catch (error) {
+    console.error('Admin blood requests error:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to load blood requests'
+    });
+  }
+});
+
 // Serve frontend
 app.use(express.static(path.join(__dirname, 'public')));
 

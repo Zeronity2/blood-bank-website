@@ -7,477 +7,1290 @@
 
   <title>Admin Dashboard - Blood Bank</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f6f8;
-      color: #333;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* SIDEBAR */
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
 
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f6f8;
+  color: #333;
+  overflow-x: hidden;
+}
 
-      width: 250px;
-      height: 100vh;
 
-      background: #8f0000;
-      color: white;
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
-      padding: 25px 18px;
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
 
-      z-index: 1000;
-    }
+  width: 250px;
+  height: 100vh;
 
-    .logo {
-      text-align: center;
-      font-size: 23px;
-      font-weight: bold;
+  background: #8f0000;
+  color: white;
 
-      margin-bottom: 30px;
-    }
+  padding: 25px 18px;
 
-    .logo span {
-      display: block;
-      font-size: 38px;
-      margin-bottom: 5px;
-    }
+  z-index: 1000;
 
-    .admin-card {
-      background: rgba(255, 255, 255, 0.12);
+  overflow-y: auto;
+}
 
-      padding: 16px;
 
-      border-radius: 12px;
+.logo {
+  text-align: center;
 
-      text-align: center;
+  font-size: 23px;
+  font-weight: bold;
 
-      margin-bottom: 25px;
-    }
+  margin-bottom: 30px;
+}
 
-    .admin-avatar {
-      width: 55px;
-      height: 55px;
 
-      border-radius: 50%;
+.logo span {
+  display: block;
 
-      background: white;
-      color: #8f0000;
+  font-size: 38px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  margin-bottom: 5px;
+}
 
-      margin: 0 auto 10px;
 
-      font-weight: bold;
-      font-size: 22px;
-    }
+.admin-card {
+  background: rgba(255, 255, 255, 0.12);
 
-    .admin-card h3 {
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
+  padding: 16px;
 
-    .admin-card p {
-      font-size: 12px;
-      color: #ffecec;
+  border-radius: 12px;
 
-      word-break: break-word;
-    }
+  text-align: center;
 
-    .admin-badge {
-      display: inline-block;
+  margin-bottom: 25px;
+}
 
-      margin-top: 8px;
 
-      padding: 4px 10px;
+.admin-avatar {
+  width: 55px;
+  height: 55px;
 
-      border-radius: 20px;
+  border-radius: 50%;
 
-      background: rgba(255, 255, 255, 0.2);
+  background: white;
+  color: #8f0000;
 
-      font-size: 10px;
-      font-weight: bold;
-    }
+  display: flex;
 
-    /* MENU */
+  align-items: center;
+  justify-content: center;
 
-    .menu {
-      list-style: none;
-    }
+  margin: 0 auto 10px;
 
-    .menu li {
-      margin-bottom: 6px;
-    }
+  font-weight: bold;
+  font-size: 22px;
+}
 
-    .menu a {
-      display: flex;
-      align-items: center;
 
-      gap: 12px;
+.admin-card h3 {
+  font-size: 15px;
 
-      padding: 12px 14px;
+  margin-bottom: 4px;
+}
 
-      color: white;
-      text-decoration: none;
 
-      border-radius: 8px;
+.admin-card p {
+  font-size: 12px;
 
-      font-size: 14px;
+  color: #ffecec;
 
-      transition: 0.2s;
-    }
+  word-break: break-word;
+}
 
-    .menu a:hover,
-    .menu a.active {
-      background: rgba(255, 255, 255, 0.18);
-    }
 
-    .menu-icon {
-      width: 22px;
-      text-align: center;
-    }
+.admin-badge {
+  display: inline-block;
 
-    .logout-btn {
-      position: absolute;
+  margin-top: 8px;
 
-      bottom: 25px;
-      left: 18px;
-      right: 18px;
+  padding: 4px 10px;
 
-      padding: 11px;
+  border-radius: 20px;
 
-      background: transparent;
+  background: rgba(255, 255, 255, 0.2);
 
-      border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 10px;
 
-      color: white;
+  font-weight: bold;
+}
 
-      border-radius: 8px;
 
-      cursor: pointer;
+/* =====================================================
+   MENU
+===================================================== */
 
-      font-weight: bold;
-    }
+.menu {
+  list-style: none;
+}
 
-    .logout-btn:hover {
-      background: white;
-      color: #8f0000;
-    }
 
-    /* MAIN */
+.menu li {
+  margin-bottom: 6px;
+}
 
-    .main {
-      margin-left: 250px;
 
-      padding: 30px 35px;
+.menu a {
+  display: flex;
 
-      min-height: 100vh;
-    }
+  align-items: center;
 
-    .topbar {
-      display: flex;
+  gap: 12px;
 
-      justify-content: space-between;
-      align-items: center;
+  padding: 12px 14px;
 
-      margin-bottom: 30px;
-    }
+  color: white;
 
-    .topbar h1 {
-      font-size: 28px;
-    }
+  text-decoration: none;
 
-    .topbar p {
-      color: #777;
+  border-radius: 8px;
 
-      font-size: 14px;
+  font-size: 14px;
 
-      margin-top: 5px;
-    }
+  transition: 0.2s;
+}
 
-    .website-btn {
-      background: white;
 
-      color: #8f0000;
+.menu a:hover,
+.menu a.active {
+  background: rgba(255, 255, 255, 0.18);
+}
 
-      text-decoration: none;
 
-      padding: 10px 16px;
+.menu-icon {
+  width: 22px;
 
-      border-radius: 8px;
+  text-align: center;
+}
 
-      font-size: 13px;
 
-      font-weight: bold;
+/* =====================================================
+   LOGOUT
+===================================================== */
 
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    }
+.logout-btn {
+  position: absolute;
 
-    /* STATISTICS */
+  bottom: 25px;
 
-    .stats {
-      display: grid;
+  left: 18px;
+  right: 18px;
 
-      grid-template-columns: repeat(4, 1fr);
+  padding: 11px;
 
-      gap: 18px;
+  background: transparent;
 
-      margin-bottom: 30px;
-    }
+  border: 1px solid rgba(255, 255, 255, 0.5);
 
-    .stat-card {
-      background: white;
+  color: white;
 
-      padding: 22px;
+  border-radius: 8px;
 
-      border-radius: 12px;
+  cursor: pointer;
 
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  font-weight: bold;
 
-      display: flex;
+  transition: 0.2s;
+}
 
-      align-items: center;
 
-      gap: 15px;
-    }
+.logout-btn:hover {
+  background: white;
 
-    .stat-icon {
-      width: 50px;
-      height: 50px;
+  color: #8f0000;
+}
 
-      background: #fff0f0;
 
-      border-radius: 10px;
+/* =====================================================
+   MAIN CONTENT
+   IMPORTANT FIX
+===================================================== */
 
-      display: flex;
+.main {
+  margin-left: 250px;
 
-      align-items: center;
-      justify-content: center;
+  width: calc(100% - 250px);
 
-      font-size: 23px;
-    }
+  min-height: 100vh;
 
-    .stat-card h3 {
-      color: #8f0000;
+  padding: 30px 35px;
 
-      font-size: 23px;
-    }
+  overflow-x: hidden;
 
-    .stat-card p {
-      color: #777;
+  min-width: 0;
+}
 
-      font-size: 12px;
 
-      margin-top: 3px;
-    }
+/* =====================================================
+   TOP BAR
+===================================================== */
 
-    /* PANELS */
+.topbar {
+  display: flex;
 
-    .content-grid {
-      display: grid;
+  justify-content: space-between;
 
-      grid-template-columns: 1.5fr 1fr;
+  align-items: center;
 
-      gap: 20px;
-    }
+  gap: 20px;
 
-    .panel {
-      background: white;
+  margin-bottom: 30px;
 
-      border-radius: 12px;
+  width: 100%;
 
-      padding: 25px;
+  min-width: 0;
+}
 
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    }
 
-    .panel h2 {
-      font-size: 18px;
+.topbar h1 {
+  font-size: 28px;
+}
 
-      margin-bottom: 20px;
-    }
 
-    /* QUICK ACTIONS */
+.topbar p {
+  color: #777;
 
-    .actions {
-      display: grid;
+  font-size: 14px;
 
-      grid-template-columns: 1fr 1fr;
+  margin-top: 5px;
+}
 
-      gap: 12px;
-    }
 
-    .action {
-      padding: 18px;
+.website-btn {
+  background: white;
 
-      border-radius: 10px;
+  color: #8f0000;
 
-      background: #fff7f7;
+  text-decoration: none;
 
-      color: #333;
+  padding: 10px 16px;
 
-      text-decoration: none;
+  border-radius: 8px;
 
-      border: 1px solid #f3dddd;
+  font-size: 13px;
 
-      transition: 0.2s;
-    }
+  font-weight: bold;
 
-    .action:hover {
-      transform: translateY(-2px);
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.06);
 
-      border-color: #d40000;
-    }
+  white-space: nowrap;
+}
 
-    .action-icon {
-      font-size: 25px;
 
-      margin-bottom: 8px;
-    }
+/* =====================================================
+   STATISTICS
+===================================================== */
 
-    .action h3 {
-      font-size: 14px;
+.stats {
+  display: grid;
 
-      margin-bottom: 5px;
-    }
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 
-    .action p {
-      color: #777;
+  gap: 18px;
 
-      font-size: 11px;
+  margin-bottom: 30px;
 
-      line-height: 1.5;
-    }
+  width: 100%;
 
-    /* RECENT */
+  min-width: 0;
+}
 
-    .recent-item {
-      display: flex;
 
-      align-items: center;
+.stat-card {
+  background: white;
 
-      gap: 12px;
+  padding: 22px;
 
-      padding: 12px 0;
+  border-radius: 12px;
 
-      border-bottom: 1px solid #eee;
-    }
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.06);
 
-    .recent-item:last-child {
-      border-bottom: none;
-    }
+  display: flex;
 
-    .recent-icon {
-      width: 38px;
-      height: 38px;
+  align-items: center;
 
-      border-radius: 8px;
+  gap: 15px;
 
-      background: #fff0f0;
+  min-width: 0;
+}
 
-      display: flex;
 
-      align-items: center;
-      justify-content: center;
-    }
+.stat-icon {
+  width: 50px;
+  height: 50px;
 
-    .recent-item h4 {
-      font-size: 13px;
+  flex-shrink: 0;
 
-      margin-bottom: 3px;
-    }
+  background: #fff0f0;
 
-    .recent-item p {
-      color: #888;
+  border-radius: 10px;
 
-      font-size: 11px;
-    }
+  display: flex;
 
-    /* MOBILE */
+  align-items: center;
+  justify-content: center;
 
-    .mobile-header {
-      display: none;
-    }
+  font-size: 23px;
+}
 
-    @media (max-width: 1100px) {
 
-      .stats {
-        grid-template-columns: 1fr 1fr;
-      }
+.stat-card h3 {
+  color: #8f0000;
 
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  font-size: 23px;
+}
 
-    @media (max-width: 700px) {
 
-      .sidebar {
-        display: none;
-      }
+.stat-card p {
+  color: #777;
 
-      .mobile-header {
-        display: flex;
+  font-size: 12px;
 
-        background: #8f0000;
+  margin-top: 3px;
+}
 
-        color: white;
 
-        padding: 15px 20px;
+/* =====================================================
+   CONTENT GRID
+===================================================== */
 
-        justify-content: space-between;
+.content-grid {
+  display: grid;
 
-        align-items: center;
-      }
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(0, 1fr);
 
-      .mobile-header h2 {
-        font-size: 20px;
-      }
+  gap: 20px;
 
-      .mobile-header button {
-        background: white;
+  width: 100%;
 
-        color: #8f0000;
+  min-width: 0;
+}
 
-        border: none;
 
-        padding: 8px 12px;
+/* =====================================================
+   PANELS
+===================================================== */
 
-        border-radius: 6px;
+.panel {
+  background: white;
 
-        font-weight: bold;
-      }
+  border-radius: 12px;
 
-      .main {
-        margin-left: 0;
+  padding: 25px;
 
-        padding: 25px 18px;
-      }
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.06);
 
-      .stats {
-        grid-template-columns: 1fr;
-      }
+  width: 100%;
 
-      .actions {
-        grid-template-columns: 1fr;
-      }
+  max-width: 100%;
 
-      .website-btn {
-        display: none;
-      }
-    }
-  </style>
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+
+.panel h2 {
+  font-size: 18px;
+
+  margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
+
+.actions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  width: 100%;
+
+  min-width: 0;
+}
+
+
+.action {
+  padding: 18px;
+
+  border-radius: 10px;
+
+  background: #fff7f7;
+
+  color: #333;
+
+  text-decoration: none;
+
+  border: 1px solid #f3dddd;
+
+  transition: 0.2s;
+
+  min-width: 0;
+}
+
+
+.action:hover {
+  transform: translateY(-2px);
+
+  border-color: #d40000;
+}
+
+
+.action-icon {
+  font-size: 25px;
+
+  margin-bottom: 8px;
+}
+
+
+.action h3 {
+  font-size: 14px;
+
+  margin-bottom: 5px;
+}
+
+
+.action p {
+  color: #777;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   RECENT ACTIVITY
+===================================================== */
+
+.recent-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #eee;
+
+  min-width: 0;
+}
+
+
+.recent-item:last-child {
+  border-bottom: none;
+}
+
+
+.recent-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #fff0f0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+.recent-item h4 {
+  font-size: 13px;
+
+  margin-bottom: 3px;
+}
+
+
+.recent-item p {
+  color: #888;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   DONOR MANAGEMENT
+===================================================== */
+
+.donor-management {
+  margin-top: 25px;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+
+.donor-header {
+  margin-bottom: 18px;
+}
+
+
+.donor-header h2 {
+  margin-bottom: 5px;
+}
+
+
+.donor-header p {
+  color: #777;
+
+  font-size: 12px;
+}
+
+
+/* DONOR FILTERS */
+
+.donor-filters {
+  display: flex;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  min-width: 0;
+}
+
+
+.donor-filters input,
+.donor-filters select {
+  padding: 11px 13px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 13px;
+
+  background: white;
+
+  max-width: 100%;
+}
+
+
+.donor-filters input {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+.donor-filters select {
+  min-width: 170px;
+}
+
+
+.donor-filters input:focus,
+.donor-filters select:focus {
+  border-color: #8f0000;
+
+  box-shadow:
+    0 0 0 3px rgba(143, 0, 0, 0.08);
+}
+
+
+/* =====================================================
+   BLOOD REQUEST MANAGEMENT
+===================================================== */
+
+.request-management {
+  margin-top: 25px;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+
+.request-header {
+  margin-bottom: 18px;
+}
+
+
+.request-header h2 {
+  margin-bottom: 5px;
+}
+
+
+.request-header p {
+  color: #777;
+
+  font-size: 12px;
+}
+
+
+/* REQUEST FILTERS */
+
+.request-filters {
+  display: flex;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  min-width: 0;
+}
+
+
+.request-filters input,
+.request-filters select {
+  padding: 11px 12px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 12px;
+
+  background: white;
+
+  max-width: 100%;
+}
+
+
+.request-filters input {
+  flex: 1;
+
+  min-width: 200px;
+}
+
+
+.request-filters select {
+  min-width: 140px;
+}
+
+
+.request-filters input:focus,
+.request-filters select:focus {
+  border-color: #8f0000;
+
+  box-shadow:
+    0 0 0 3px rgba(143, 0, 0, 0.08);
+}
+
+
+/* =====================================================
+   TABLE CONTAINER
+===================================================== */
+
+.table-container {
+  display: block;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  border-radius: 8px;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 750px;
+}
+
+
+.request-management table {
+  min-width: 950px;
+}
+
+
+thead {
+  background: #fff5f5;
+}
+
+
+th {
+  text-align: left;
+
+  padding: 13px 12px;
+
+  color: #8f0000;
+
+  font-size: 12px;
+
+  border-bottom: 1px solid #eee;
+
+  white-space: nowrap;
+}
+
+
+td {
+  padding: 13px 12px;
+
+  font-size: 12px;
+
+  border-bottom: 1px solid #eee;
+
+  color: #555;
+
+  white-space: nowrap;
+}
+
+
+tbody tr:hover {
+  background: #fffafa;
+}
+
+
+/* =====================================================
+   BLOOD BADGE
+===================================================== */
+
+.blood-badge {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  background: #ffe5e5;
+
+  color: #8f0000;
+
+  font-weight: bold;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   STATUS BADGE
+===================================================== */
+
+.status-badge {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: bold;
+
+  white-space: nowrap;
+}
+
+
+.status-pending {
+  background: #fff3cd;
+
+  color: #856404;
+}
+
+
+.status-fulfilled {
+  background: #d4edda;
+
+  color: #155724;
+}
+
+
+.status-cancelled {
+  background: #f8d7da;
+
+  color: #721c24;
+}
+
+
+/* =====================================================
+   URGENCY BADGE
+===================================================== */
+
+.urgency-badge {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: bold;
+
+  white-space: nowrap;
+}
+
+
+.urgency-normal {
+  background: #e8f0fe;
+
+  color: #315b9d;
+}
+
+
+.urgency-urgent {
+  background: #ffe5cc;
+
+  color: #a54b00;
+}
+
+
+.urgency-emergency {
+  background: #ffe0e0;
+
+  color: #a00000;
+}
+
+
+/* =====================================================
+   UNITS
+===================================================== */
+
+.units-badge {
+  font-weight: bold;
+
+  color: #8f0000;
+}
+
+
+/* =====================================================
+   LOADING / EMPTY
+===================================================== */
+
+.loading,
+.empty {
+  text-align: center;
+
+  padding: 30px;
+
+  color: #888;
+}
+
+
+/* =====================================================
+   TABLE SCROLLBAR
+===================================================== */
+
+.table-container::-webkit-scrollbar {
+  height: 7px;
+}
+
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+
+  border-radius: 10px;
+}
+
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+
+  border-radius: 10px;
+}
+
+
+/* =====================================================
+   TABLET / SMALL LAPTOP
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .main {
+    padding: 25px;
+  }
+
+  .stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .main {
+    margin-left: 220px;
+
+    width: calc(100% - 220px);
+
+    padding: 22px;
+  }
+
+  .stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE HEADER
+===================================================== */
+
+.mobile-header {
+  display: none;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .sidebar {
+    display: none;
+  }
+
+
+  .mobile-header {
+    display: flex;
+
+    background: #8f0000;
+
+    color: white;
+
+    padding: 15px 20px;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+  }
+
+
+  .mobile-header h2 {
+    font-size: 20px;
+  }
+
+
+  .mobile-header button {
+    background: white;
+
+    color: #8f0000;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+  }
+
+
+  .main {
+    margin-left: 0;
+
+    width: 100%;
+
+    padding: 25px 18px;
+
+    overflow-x: hidden;
+  }
+
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+
+  .topbar h1 {
+    font-size: 23px;
+  }
+
+
+  .website-btn {
+    display: none;
+  }
+
+
+  .stats {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .donor-filters {
+    flex-direction: column;
+  }
+
+
+  .donor-filters input,
+  .donor-filters select {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+
+  .request-filters {
+    flex-direction: column;
+  }
+
+
+  .request-filters input,
+  .request-filters select {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+
+  .panel {
+    padding: 18px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .main {
+    padding: 18px 12px;
+  }
+
+
+  .panel {
+    padding: 15px;
+  }
+
+
+  .stat-card {
+    padding: 17px;
+  }
+
+
+  .topbar h1 {
+    font-size: 21px;
+  }
+
+}
+
+/* =====================================================
+   FINAL SIDEBAR / CONTENT OVERLAP FIX
+===================================================== */
+
+/* Keep sidebar above everything */
+.sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+
+  width: 250px !important;
+  height: 100vh !important;
+
+  z-index: 9999 !important;
+}
+
+
+/* Main content must start AFTER sidebar */
+.main {
+  position: relative !important;
+
+  margin-left: 250px !important;
+
+  width: calc(100% - 250px) !important;
+
+  max-width: calc(100% - 250px) !important;
+
+  min-width: 0 !important;
+
+  padding: 30px 35px !important;
+
+  overflow-x: hidden !important;
+
+  z-index: 1 !important;
+}
+
+
+/* Every direct section inside main */
+.main > * {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+
+/* Panels must never extend outside main */
+.main .panel,
+.main .donor-management,
+.main .request-management {
+  width: 100% !important;
+
+  max-width: 100% !important;
+
+  min-width: 0 !important;
+
+  margin-left: 0 !important;
+
+  margin-right: 0 !important;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* Search/filter rows */
+.donor-filters,
+.request-filters {
+  width: 100% !important;
+
+  max-width: 100% !important;
+
+  min-width: 0 !important;
+}
+
+
+/* Inputs are allowed to shrink */
+.donor-filters input,
+.request-filters input {
+  min-width: 0 !important;
+
+  max-width: 100% !important;
+}
+
+
+/* Tables scroll INSIDE their container */
+.table-container {
+  width: 100% !important;
+
+  max-width: 100% !important;
+
+  min-width: 0 !important;
+
+  overflow-x: auto !important;
+
+  overflow-y: hidden !important;
+}
+
+
+/* Don't let tables expand the dashboard */
+.table-container table {
+  max-width: none !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .sidebar {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    padding: 25px 18px !important;
+  }
+
+}
+</style>
 </head>
 
 <body>
@@ -965,8 +1778,219 @@
 
     </div>
 
-  </main>
+<!-- ================= DONOR MANAGEMENT ================= -->
 
+<section class="panel donor-management">
+
+  <div class="panel-header donor-header">
+
+    <div>
+      <h2>🩸 Donor Management</h2>
+      <p>View and search registered blood donors.</p>
+    </div>
+
+  </div>
+
+  <!-- SEARCH / FILTER -->
+
+  <div class="donor-filters">
+
+    <input
+      type="text"
+      id="donorSearch"
+      placeholder="🔎 Search by name, email or location..."
+    >
+
+    <select id="bloodGroupFilter">
+
+      <option value="">All Blood Groups</option>
+
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+
+    </select>
+
+  </div>
+
+
+  <!-- DONOR TABLE -->
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Name</th>
+
+          <th>Blood Group</th>
+
+          <th>Email</th>
+
+          <th>Phone</th>
+
+          <th>Location</th>
+
+          <th>Registered</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="donorTableBody">
+
+        <tr>
+
+          <td colspan="6" class="loading">
+            Loading donors...
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+<!-- ================= BLOOD REQUEST MANAGEMENT ================= -->
+
+<section class="panel request-management">
+
+  <div class="panel-header request-header">
+
+    <div>
+      <h2>🆘 Blood Request Management</h2>
+      <p>View and monitor blood requests submitted by users.</p>
+    </div>
+
+  </div>
+
+  <!-- FILTERS -->
+
+  <div class="request-filters">
+
+    <input
+      type="text"
+      id="requestSearch"
+      placeholder="🔎 Search patient, hospital or city..."
+    >
+
+    <select id="requestBloodFilter">
+
+      <option value="">All Blood Groups</option>
+
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+
+    </select>
+
+    <select id="requestStatusFilter">
+
+      <option value="">All Status</option>
+
+      <option value="Pending">
+        Pending
+      </option>
+
+      <option value="Fulfilled">
+        Fulfilled
+      </option>
+
+      <option value="Cancelled">
+        Cancelled
+      </option>
+
+    </select>
+
+    <select id="requestUrgencyFilter">
+
+      <option value="">All Urgency</option>
+
+      <option value="Normal">
+        Normal
+      </option>
+
+      <option value="Urgent">
+        Urgent
+      </option>
+
+      <option value="Emergency">
+        Emergency
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- REQUEST TABLE -->
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Patient</th>
+          <th>Blood</th>
+          <th>Units</th>
+          <th>Hospital</th>
+          <th>City</th>
+          <th>Urgency</th>
+          <th>Status</th>
+          <th>Required Date</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="requestTableBody">
+
+        <tr>
+
+          <td
+            colspan="8"
+            class="loading"
+          >
+            Loading blood requests...
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+</main>
 
   <!-- JAVASCRIPT -->
 
@@ -1098,6 +2122,654 @@ async function loadAdminStats() {
 }
 
 loadAdminStats();
+
+// ================= LOAD DONORS =================
+
+let allDonors = [];
+
+async function loadDonors() {
+
+  try {
+
+    const token =
+      localStorage.getItem("token");
+
+    const response =
+      await fetch(
+        "/api/admin/donors",
+        {
+          method: "GET",
+
+          headers: {
+            "Authorization":
+              `Bearer ${token}`
+          }
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!result.success) {
+
+      console.error(
+        "Failed to load donors:",
+        result.message
+      );
+
+      return;
+    }
+
+    allDonors = result.donors || [];
+
+    displayDonors(allDonors);
+
+  } catch (error) {
+
+    console.error(
+      "Error loading donors:",
+      error
+    );
+
+    document
+      .getElementById("donorTableBody")
+      .innerHTML = `
+        <tr>
+          <td colspan="6" class="empty">
+            Unable to load donors.
+          </td>
+        </tr>
+      `;
+  }
+}
+
+
+// ================= DISPLAY DONORS =================
+
+function displayDonors(donors) {
+
+  const tableBody =
+    document.getElementById(
+      "donorTableBody"
+    );
+
+  if (!donors.length) {
+
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="6" class="empty">
+          No donors found.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  tableBody.innerHTML =
+    donors.map(donor => {
+
+      const registeredDate =
+        donor.createdAt
+          ? new Date(
+              donor.createdAt
+            ).toLocaleDateString()
+          : "-";
+
+
+      return `
+        <tr>
+
+          <td>
+            <strong>
+              ${escapeHTML(
+                donor.name || "-"
+              )}
+            </strong>
+          </td>
+
+          <td>
+            <span class="blood-badge">
+              ${escapeHTML(
+                donor.bloodGroup || "-"
+              )}
+            </span>
+          </td>
+
+          <td>
+            ${escapeHTML(
+              donor.email || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              donor.phone || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              donor.location ||
+              donor.city ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${registeredDate}
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+}
+
+
+// ================= SEARCH =================
+
+function filterDonors() {
+
+  const search =
+    document
+      .getElementById("donorSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const bloodGroup =
+    document
+      .getElementById("bloodGroupFilter")
+      .value;
+
+
+  const filtered =
+    allDonors.filter(donor => {
+
+      const name =
+        (donor.name || "")
+          .toLowerCase();
+
+      const email =
+        (donor.email || "")
+          .toLowerCase();
+
+      const location =
+        (
+          donor.location ||
+          donor.city ||
+          ""
+        ).toLowerCase();
+
+
+      const matchesSearch =
+        !search ||
+        name.includes(search) ||
+        email.includes(search) ||
+        location.includes(search);
+
+
+      const matchesBloodGroup =
+        !bloodGroup ||
+        donor.bloodGroup === bloodGroup;
+
+
+      return (
+        matchesSearch &&
+        matchesBloodGroup
+      );
+
+    });
+
+
+  displayDonors(filtered);
+}
+
+
+// ================= SAFE HTML =================
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+// ================= FILTER EVENTS =================
+
+document
+  .getElementById("donorSearch")
+  .addEventListener(
+    "input",
+    filterDonors
+  );
+
+
+document
+  .getElementById("bloodGroupFilter")
+  .addEventListener(
+    "change",
+    filterDonors
+  );
+
+
+// Load donors when dashboard opens
+
+loadDonors();
+
+// ================= LOAD BLOOD REQUESTS =================
+
+let allRequests = [];
+
+async function loadBloodRequests() {
+
+  try {
+
+    const token =
+      localStorage.getItem("token");
+
+
+    const response =
+      await fetch(
+        "/api/admin/requests",
+        {
+          method: "GET",
+
+          headers: {
+            "Authorization":
+              `Bearer ${token}`
+          }
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      console.error(
+        "Failed to load requests:",
+        result.message
+      );
+
+      return;
+    }
+
+
+    allRequests =
+      result.requests || [];
+
+
+    displayBloodRequests(
+      allRequests
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Error loading blood requests:",
+      error
+    );
+
+
+    document
+      .getElementById(
+        "requestTableBody"
+      )
+      .innerHTML = `
+        <tr>
+          <td
+            colspan="8"
+            class="empty"
+          >
+            Unable to load blood requests.
+          </td>
+        </tr>
+      `;
+
+  }
+
+}
+
+
+// ================= DISPLAY REQUESTS =================
+
+function displayBloodRequests(
+  requests
+) {
+
+  const tableBody =
+    document.getElementById(
+      "requestTableBody"
+    );
+
+
+  if (!requests.length) {
+
+    tableBody.innerHTML = `
+      <tr>
+        <td
+          colspan="8"
+          class="empty"
+        >
+          No blood requests found.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+
+  tableBody.innerHTML =
+    requests.map(request => {
+
+
+      /* REQUIRED DATE */
+
+      const requiredDate =
+        request.requiredDate
+          ? new Date(
+              request.requiredDate
+            ).toLocaleDateString()
+          : "-";
+
+
+      /* STATUS */
+
+      const status =
+        request.status || "Pending";
+
+
+      const statusClass =
+        status
+          .toLowerCase();
+
+
+      /* URGENCY */
+
+      const urgency =
+        request.urgency || "Normal";
+
+
+      const urgencyClass =
+        urgency
+          .toLowerCase();
+
+
+      return `
+        <tr>
+
+          <td>
+
+            <strong>
+              ${escapeHTML(
+                request.patientName || "-"
+              )}
+            </strong>
+
+            <br>
+
+            <small>
+              ${escapeHTML(
+                request.contactName || ""
+              )}
+            </small>
+
+          </td>
+
+
+          <td>
+
+            <span class="blood-badge">
+
+              ${escapeHTML(
+                request.bloodGroup || "-"
+              )}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
+            <span class="units-badge">
+
+              ${escapeHTML(
+                request.units || "-"
+              )}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
+            ${escapeHTML(
+              request.hospital || "-"
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${escapeHTML(
+              request.city || "-"
+            )}
+
+          </td>
+
+
+          <td>
+
+            <span
+              class="urgency-badge urgency-${urgencyClass}"
+            >
+
+              ${escapeHTML(
+                urgency
+              )}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
+            <span
+              class="status-badge status-${statusClass}"
+            >
+
+              ${escapeHTML(
+                status
+              )}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
+            ${requiredDate}
+
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+
+}
+
+
+// ================= FILTER REQUESTS =================
+
+function filterRequests() {
+
+  const search =
+    document
+      .getElementById(
+        "requestSearch"
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const bloodGroup =
+    document
+      .getElementById(
+        "requestBloodFilter"
+      )
+      .value;
+
+
+  const status =
+    document
+      .getElementById(
+        "requestStatusFilter"
+      )
+      .value;
+
+
+  const urgency =
+    document
+      .getElementById(
+        "requestUrgencyFilter"
+      )
+      .value;
+
+
+  const filtered =
+    allRequests.filter(
+      request => {
+
+
+        const patientName =
+          (
+            request.patientName ||
+            ""
+          ).toLowerCase();
+
+
+        const hospital =
+          (
+            request.hospital ||
+            ""
+          ).toLowerCase();
+
+
+        const city =
+          (
+            request.city ||
+            ""
+          ).toLowerCase();
+
+
+        const matchesSearch =
+          !search ||
+          patientName.includes(search) ||
+          hospital.includes(search) ||
+          city.includes(search);
+
+
+        const matchesBlood =
+          !bloodGroup ||
+          request.bloodGroup ===
+            bloodGroup;
+
+
+        const matchesStatus =
+          !status ||
+          request.status ===
+            status;
+
+
+        const matchesUrgency =
+          !urgency ||
+          request.urgency ===
+            urgency;
+
+
+        return (
+          matchesSearch &&
+          matchesBlood &&
+          matchesStatus &&
+          matchesUrgency
+        );
+
+      }
+    );
+
+
+  displayBloodRequests(
+    filtered
+  );
+
+}
+
+
+// ================= FILTER EVENTS =================
+
+document
+  .getElementById(
+    "requestSearch"
+  )
+  .addEventListener(
+    "input",
+    filterRequests
+  );
+
+
+document
+  .getElementById(
+    "requestBloodFilter"
+  )
+  .addEventListener(
+    "change",
+    filterRequests
+  );
+
+
+document
+  .getElementById(
+    "requestStatusFilter"
+  )
+  .addEventListener(
+    "change",
+    filterRequests
+  );
+
+
+document
+  .getElementById(
+    "requestUrgencyFilter"
+  )
+  .addEventListener(
+    "change",
+    filterRequests
+  );
+
+
+// Load requests
+
+loadBloodRequests();
 
     /* ================= LOGOUT ================= */
 
